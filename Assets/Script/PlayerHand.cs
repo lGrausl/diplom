@@ -36,7 +36,6 @@ public class PlayerHand : MonoBehaviour
         arrPosition2[0] = arrPosition[0] - '0';
         arrPosition2[1] = arrPosition[1] - '0';
 
-        Debug.Log($"{arrPosition2[0]}{arrPosition2[1]}");
 
     }
 
@@ -67,27 +66,33 @@ public class PlayerHand : MonoBehaviour
 
             if (MoveCard.Card != null)
             {
-                if (MoveCard.Card.GetComponent<Specifications>().position[0] == 0 && arrPosition2[1] == 1)
+                if (MoveCard.Card.GetComponent<Specifications>().position[0] == 0 && arrPosition2[1] == 1 && MoveCard.Card.tag == "Card")
                 {
                     m_Matierial.color = te.color;
                 }
-                 else if(
-                        (MoveCard.Card.GetComponent<Specifications>().position[0] != 0)&&
-                            (
-                                arrPosition2[0] <= MoveCard.Card.GetComponent<Specifications>().position[0] + MoveCard.Card.GetComponent<Specifications>().StepDistance[0] && // низ лево
-                                arrPosition2[1] >= MoveCard.Card.GetComponent<Specifications>().position[1] - MoveCard.Card.GetComponent<Specifications>().StepDistance[1]
-                            )
-                            &&
-                            (
-                                arrPosition2[0] >= MoveCard.Card.GetComponent<Specifications>().position[0] - MoveCard.Card.GetComponent<Specifications>().StepDistance[0] &&   // верх право
-                                 arrPosition2[1] <= MoveCard.Card.GetComponent<Specifications>().position[1] + MoveCard.Card.GetComponent<Specifications>().StepDistance[1]
-                            )
-                        )
-                 {
+                else if(MoveCard.Card.GetComponent<Specifications>().position[0] == 0 && arrPosition2[1] == 8 && MoveCard.Card.tag == "CardFrag") 
+                {
                     m_Matierial.color = te.color;
-                    Debug.Log($"{MoveCard.Card.GetComponent<Specifications>().position[0]} {MoveCard.Card.GetComponent<Specifications>().position[1]}");
-                 }
+                }
+                else if (
+                       (MoveCard.Card.GetComponent<Specifications>().position[0] != 0)
+                           &&
+                           (
+                               arrPosition2[0] <= MoveCard.Card.GetComponent<Specifications>().position[0] + MoveCard.Card.GetComponent<Specifications>().StepDistance[0] && // низ лево
+                               arrPosition2[1] >= MoveCard.Card.GetComponent<Specifications>().position[1] - MoveCard.Card.GetComponent<Specifications>().StepDistance[1]
+                           )
+                           &&
+                           (
+                               arrPosition2[0] >= MoveCard.Card.GetComponent<Specifications>().position[0] - MoveCard.Card.GetComponent<Specifications>().StepDistance[0] &&   // верх право
+                               arrPosition2[1] <= MoveCard.Card.GetComponent<Specifications>().position[1] + MoveCard.Card.GetComponent<Specifications>().StepDistance[1]
+                           )
+                       )
+                {
+                    m_Matierial.color = te.color;
+                }
             }
+
+            
         }
 
 

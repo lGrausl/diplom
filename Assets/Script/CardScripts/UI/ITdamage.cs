@@ -4,11 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 public class ITdamage : MonoBehaviour
 {
-    public Text Text;
-    public GameObject card;
+
 
     void Update()
     {
-        Text.text = card.GetComponent<Specifications>().damage.ToString();
+        this.gameObject.GetComponent<TextMesh>().text = this.transform.parent.gameObject.GetComponent<Specifications>().damage.ToString();
     }
 }

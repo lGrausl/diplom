@@ -28,15 +28,41 @@ public class Specifications : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        if(Action.steps == Action.HiddenStaps) 
+
+
+        if (this.gameObject.GetComponent<Click>().action == true && this.gameObject.GetComponent<Click>().attack == false)
         {
-            this.gameObject.GetComponent<Click>().action = true;
+            GetComponent<SpriteRenderer>().color = Color.green;
         }
-        Debug.Log($"{position[0]}  {position[1]}");
+        else if (this.gameObject.GetComponent<Click>().action == false)
+        {
+            GetComponent<SpriteRenderer>().color = Color.white;
+            this.gameObject.GetComponent<Click>().attack = false;
+        }
+
+
+
+        if (Action.steps == Action.HiddenStaps && Action.steps % 2 == 1)
+        {
+            if (this.gameObject.tag == "Card")
+                this.gameObject.GetComponent<Click>().action = true;
+            else
+                this.gameObject.GetComponent<Click>().action = false;
+
+        }
+        else if (Action.steps == Action.HiddenStaps && Action.steps % 2 == 0)
+        {
+            if (this.gameObject.tag == "Card")
+                this.gameObject.GetComponent<Click>().action = false;
+            else
+                this.gameObject.GetComponent<Click>().action = true;
+
+        }
+
+
+
+        
     }
-
-
-
 
 
 }

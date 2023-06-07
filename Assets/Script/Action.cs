@@ -22,7 +22,7 @@ public class Action : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(oneCard && twoCard)
+        if(oneCard  && twoCard)
         {
             CurrentHealth = oneCard.GetComponent<Specifications>().CurrentHealth; //1card stats
             damage = twoCard.GetComponent<Specifications>().damage;
@@ -39,15 +39,23 @@ public class Action : MonoBehaviour
 
             oneCard.GetComponent<Click>().action = false;
 
+
+
+            oneCard.GetComponent<SpriteRenderer>().color = Color.white;
+
             oneCard = null;
             twoCard = null;
 
         }
 
+
+
         if(Action.steps <= 0) 
         {
-            playerChange.change();
+            playerChange.Change();
         }
+
+
     }
 
 

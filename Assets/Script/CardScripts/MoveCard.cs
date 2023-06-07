@@ -27,7 +27,7 @@ public class MoveCard : MonoBehaviour, IDragHandler , IBeginDragHandler , IEndDr
     public void OnBeginDrag(PointerEventData eventData)
     {
 
-        if ((playerChange.player && this.gameObject.tag == "Card") || (playerChange.player == false && this.gameObject.tag == "CardFrag"))
+        if (((playerChange.player == true && this.gameObject.tag == "Card") || (playerChange.player == false && this.gameObject.tag == "CardFrag")) && this.gameObject.GetComponent<Click>().action == true)
         {
             Card = gameObject;
 
@@ -45,35 +45,73 @@ public class MoveCard : MonoBehaviour, IDragHandler , IBeginDragHandler , IEndDr
 
     public void OnDrag(PointerEventData eventData)
     {
-        if((playerChange.player && this.gameObject.tag == "Card") || (playerChange.player == false && this.gameObject.tag == "CardFrag"))
+        if(((playerChange.player == true && this.gameObject.tag == "Card") || (playerChange.player == false && this.gameObject.tag == "CardFrag")) && this.gameObject.GetComponent<Click>().action == true)
         {
             Vector3 p = Camera.main.ScreenToWorldPoint(new Vector3(eventData.position.x - shiftx, eventData.position.y - shifty, 7));
             transform.position = p;
+
+            Card.GetComponent<Click>().attack = false;
+
+            if (Click.Card != Card) 
+            {
+                Click.Card.GetComponent<Click>().attack = false;
+            }
+
         }
 
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if((playerChange.player && this.gameObject.tag == "Card") || (playerChange.player == false && this.gameObject.tag == "CardFrag"))
+        if((playerChange.player == true && this.gameObject.tag == "Card") || (playerChange.player == false && this.gameObject.tag == "CardFrag") && this.gameObject.GetComponent<Click>().action == true)
         {
-
             if (Parent == transform.parent)
             {
                 transform.position = StartPos;
             }
+            else if (MoveCard.Card.GetComponent<Specifications>().position[0] == 0 && this.transform.parent.gameObject.GetComponent<PlayerHand>().arrPosition2[1] == 1 && MoveCard.Card.tag == "Card")
+            {
+                SaveMovement();
+            }
+            else if (MoveCard.Card.GetComponent<Specifications>().position[0] == 0 && this.transform.parent.gameObject.GetComponent<PlayerHand>().arrPosition2[1] == 8 && MoveCard.Card.tag == "CardFrag") 
+            {
+                SaveMovement();
+            }
+            else if (
+                        (MoveCard.Card.GetComponent<Specifications>().position[0] != 0) &&
+                            (
+                                transform.parent.gameObject.GetComponent<PlayerHand>().arrPosition2[0] <= MoveCard.Card.GetComponent<Specifications>().position[0] + MoveCard.Card.GetComponent<Specifications>().StepDistance[0] && // down left
+                                transform.parent.gameObject.GetComponent<PlayerHand>().arrPosition2[1] >= MoveCard.Card.GetComponent<Specifications>().position[1] - MoveCard.Card.GetComponent<Specifications>().StepDistance[1]
+                            )
+                            &&
+                            (
+                                transform.parent.gameObject.GetComponent<PlayerHand>().arrPosition2[0] >= MoveCard.Card.GetComponent<Specifications>().position[0] - MoveCard.Card.GetComponent<Specifications>().StepDistance[0] &&   // up right
+                                 transform.parent.gameObject.GetComponent<PlayerHand>().arrPosition2[1] <= MoveCard.Card.GetComponent<Specifications>().position[1] + MoveCard.Card.GetComponent<Specifications>().StepDistance[1]
+                            )
+                        )
+            {
+                SaveMovement();
+            }
             else
             {
-                Action.steps -= 1;
-                transform.localPosition = Vector3.zero;
-                Card.GetComponent<Click>().action = true;
-                Card.GetComponent<Click>().invulnerability = false;
+                transform.position = StartPos;
             }
+                MoveCard.Card = null;
+            
+        }
+
+    }
+
+    public void SaveMovement() 
+    {
+            Action.steps -= 1;
+            transform.localPosition = Vector3.zero;
+            Click.Card = null;
+            Card.GetComponent<Click>().attack = false;
+            Card.GetComponent<Click>().action = false;
+            Card.GetComponent<Click>().invulnerability = false;
             Card.GetComponent<Specifications>().position[0] = transform.parent.gameObject.GetComponent<PlayerHand>().arrPosition2[0];
             Card.GetComponent<Specifications>().position[1] = transform.parent.gameObject.GetComponent<PlayerHand>().arrPosition2[1];
-
-            MoveCard.Card = null;
-        }
 
     }
 

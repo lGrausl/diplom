@@ -54,7 +54,7 @@ public class MoveCard : MonoBehaviour, IDragHandler , IBeginDragHandler , IEndDr
 
             if (Click.Card != Card) 
             {
-                Click.Card.GetComponent<Click>().attack = false;
+                Card.GetComponent<Click>().attack = false;
             }
 
         }
@@ -104,7 +104,7 @@ public class MoveCard : MonoBehaviour, IDragHandler , IBeginDragHandler , IEndDr
 
     public void SaveMovement() 
     {
-            Action.steps -= 1;
+            Action.steps -= Card.GetComponent<Specifications>().ActionPoints;
             transform.localPosition = Vector3.zero;
             Click.Card = null;
             Card.GetComponent<Click>().attack = false;

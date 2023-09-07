@@ -14,7 +14,7 @@ public class Click : MonoBehaviour
 
 
 
-    private void OnMouseDown()
+    private void OnMouseUp()
     {
 
         if (((playerChange.player && this.gameObject.tag == "Card") || (playerChange.player == false && this.gameObject.tag == "CardFrag")) && invulnerability == false && action && character == false && Card == null)

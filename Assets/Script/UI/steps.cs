@@ -14,4 +14,6 @@ public class steps : MonoBehaviour
         else
             GetComponent<Text>().color = Color.red;
     }
+
+    
 }
